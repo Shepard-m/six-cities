@@ -13,7 +13,7 @@ import PlacesOptions from '../components/places-options';
 import Loader from '../components/loader/loader';
 import { fetchOffersAction } from '../store/api-action';
 import { offersSelectors } from '../store/slice/offers';
-import { selectCity, sortOffer } from '../store/slice/offers';
+import { offersAction } from '../store/slice/offers';
 
 export default function MainPage() {
   const selectOffers = useAppSelector(offersSelectors.offers);
@@ -23,7 +23,7 @@ export default function MainPage() {
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-    dispatch(selectCity(currentCity));
+    dispatch(offersAction.selectCity(currentCity));
   }, [currentCity, dispatch]);
 
   const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
@@ -49,7 +49,7 @@ export default function MainPage() {
   const [selectedLocation, setSelectedLocation] = useState<string>(currentCity);
 
   const handelSortOfferClick = (sortType: string) => {
-    dispatch(sortOffer(sortType));
+    dispatch(offersAction.sortOffer(sortType));
     setIsOpenSort(!isOpenSort);
     setSortName(sortType);
   };
@@ -74,7 +74,7 @@ export default function MainPage() {
 
     if (evt.currentTarget.tagName === 'SPAN' && evt.currentTarget.textContent !== null) {
       setSelectedLocation(evt.currentTarget.textContent);
-      dispatch(selectCity(evt.currentTarget.textContent));
+      dispatch(offersAction.selectCity(evt.currentTarget.textContent));
     }
 
   };

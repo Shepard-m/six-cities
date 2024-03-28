@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchOfferAction } from '../api-action';
 import { Offer } from '../../types/offer';
 import { RequestStatus } from '../../const';
@@ -57,6 +57,13 @@ const offerSlice = createSlice({
   reducers: {
     clear(state) {
       state.currentOffer = null;
+    },
+    addOfferNearbyToFavorites: (state, action: PayloadAction<{ offerId: string; isFavorite: boolean }>) => {
+      state.nearby.map((offer) => {
+        if (offer.id === action.payload.offerId) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
     },
   },
   selectors: {

@@ -53,6 +53,13 @@ const offersSlice = createSlice({
       state.initialOffers = action.payload;
       state.offers = state.initialOffers.filter((offer) => offer.city.name === state.city);
     },
+    addOfferToFavorites: (state, action: PayloadAction<{ offerId: string; isFavorite: boolean }>) => {
+      state.offers.map((offer) => {
+        if (offer.id === action.payload.offerId) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
+    },
   },
   selectors: {
     isOffersDataLoading: (state: TInitialState) => state.isOfferDataLoadingStatus,
@@ -62,8 +69,8 @@ const offersSlice = createSlice({
   }
 });
 
-const { selectCity, sortOffer, loadOffer } = offersSlice.actions;
+const offersAction = offersSlice.actions;
 
 const offersSelectors = offersSlice.selectors;
 
-export { selectCity, sortOffer, loadOffer, offersSlice, offersSelectors };
+export { offersAction, offersSlice, offersSelectors };
