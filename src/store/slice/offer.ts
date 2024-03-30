@@ -3,7 +3,6 @@ import { fetchOfferAction } from '../api-action';
 import { Offer } from '../../types/offer';
 import { RequestStatus } from '../../const';
 import { fetchOfferNearbyAction } from '../api-action';
-import { fetchCommentAction } from '../api-action';
 import { OfferPreviews } from '../../types/offer-preview';
 
 type TInitialState = {
@@ -33,17 +32,6 @@ const offerSlice = createSlice({
         state.status = RequestStatus.SUCCESS;
       })
       .addCase(fetchOfferAction.rejected, (state) => {
-        state.isOfferDataLoadingStatus = false;
-        state.status = RequestStatus.FAILED;
-      })
-      .addCase(fetchCommentAction.pending, (state) => {
-        state.isOfferDataLoadingStatus = true;
-      })
-      .addCase(fetchCommentAction.fulfilled, (state) => {
-        state.isOfferDataLoadingStatus = false;
-        state.status = RequestStatus.SUCCESS;
-      })
-      .addCase(fetchCommentAction.rejected, (state) => {
         state.isOfferDataLoadingStatus = false;
         state.status = RequestStatus.FAILED;
       })

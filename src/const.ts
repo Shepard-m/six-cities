@@ -79,6 +79,14 @@ const SizeOptionButtonFavorite = {
   }
 };
 
+const countStars = {
+  one: 1,
+  two: 2,
+  three: 3,
+  foo: 4,
+  five: 5
+};
+
 
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
 
@@ -87,4 +95,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, SizeOptionButtonFavorite, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
+export { CountStar, AppRoute, countStars, SizeOptionButtonFavorite, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };

@@ -130,6 +130,6 @@ export const fetchCommentAction = createAsyncThunk<Comment, TApiComment, {
   'data/fetchComment',
   async ({ offerId, rating, comment }, { extra: api }) => {
     const { data } = await api.post<OfferPreviews[]>(`${APIRoute.COMMENTS}/${offerId}`, { rating, comment });
-    return { data };
+    return { ...data };
   }
 );

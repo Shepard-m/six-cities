@@ -1,34 +1,27 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
-import Star from './star';
+import Stars from './stars';
 import { fetchCommentAction } from '../store/api-action';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { offerSelector } from '../store/slice/offer';
 
 type CommentsTemplateProps = {
-  countStar: number;
   offerId: string;
 }
 
-export default function CommentsTemplate({ countStar, offerId }: CommentsTemplateProps) {
+export default function CommentsTemplate({ offerId }: CommentsTemplateProps) {
   const isOfferDataLoadingStatus = useAppSelector(offerSelector.isOfferDataLoadingStatus);
   const [isCorrectnessForm, setIsCorrectnessForm] = useState(false);
   const [review, setReview] = useState({ comment: '', rating: 0 });
   const dispatch = useAppDispatch();
+
   const onChooseRating = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setReview({ ...review, rating: +target.defaultValue });
     setIsCorrectnessForm(false);
+
+
     if (review.comment.length >= 50 && review.comment.length < 300 && review.rating > 0) {
       setIsCorrectnessForm(true);
     }
-  };
-
-  const createStars = () => {
-    const stars: JSX.Element[] = [];
-    for (let i = countStar; i > 0; i--) {
-      stars.push(<Star countStar={i} onChooseRating={onChooseRating} />);
-    }
-
-    return stars;
   };
 
   const onInputCommentKeyDown = ({ target }: ChangeEvent<HTMLTextAreaElement>) => {
@@ -46,8 +39,7 @@ export default function CommentsTemplate({ countStar, offerId }: CommentsTemplat
     setIsCorrectnessForm(false);
     try {
       dispatch(fetchCommentAction({ offerId, ...review }));
-      review.comment = '';
-      review.rating = 0;
+      setReview({ comment: '', rating: 0 });
       setIsCorrectnessForm(true);
     } catch { /* empty */ }
   };
@@ -56,7 +48,7 @@ export default function CommentsTemplate({ countStar, offerId }: CommentsTemplat
     <form className="reviews__form form" action="#" method="post" onSubmit={onSendReviewsSubmit} >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        {createStars()}
+        <Stars onChooseRating={onChooseRating} />
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={''} onInput={onInputCommentKeyDown} />
       <div className="reviews__button-wrapper">

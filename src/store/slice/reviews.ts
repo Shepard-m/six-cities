@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCommentsAction } from '../api-action';
+import { fetchCommentsAction, fetchCommentAction } from '../api-action';
 import { RequestStatus } from '../../const';
 import { Comment } from '../../types/comment';
 
@@ -27,6 +27,18 @@ const reviewsSlice = createSlice({
         state.comments = action.payload;
       })
       .addCase(fetchCommentsAction.rejected, (state) => {
+        state.isOfferDataLoadingStatus = false;
+        state.status = RequestStatus.FAILED;
+      })
+      .addCase(fetchCommentAction.pending, (state) => {
+        state.isOfferDataLoadingStatus = true;
+      })
+      .addCase(fetchCommentAction.fulfilled, (state, action) => {
+        state.isOfferDataLoadingStatus = false;
+        state.status = RequestStatus.SUCCESS;
+        state.comments.push(action.payload);
+      })
+      .addCase(fetchCommentAction.rejected, (state) => {
         state.isOfferDataLoadingStatus = false;
         state.status = RequestStatus.FAILED;
       });
