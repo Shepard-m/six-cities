@@ -2,7 +2,7 @@ import Container from '../components/container';
 import { City } from '../types/city';
 import ListCards from '../components/list-cards';
 import Map from '../components/map';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import MainEmpty from '../components/main-empty';
 import { OptionListCard } from '../const';
 import { OfferPreviews } from '../types/offer-preview';
@@ -17,6 +17,7 @@ import { offersAction } from '../store/slice/offers';
 
 export default function MainPage() {
   const selectOffers = useAppSelector(offersSelectors.offers);
+  const initialOffers = useAppSelector(offersSelectors.initialOffers);
   const currentCity = useAppSelector(offersSelectors.city);
   const dispatch = useAppDispatch();
   const statusOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
@@ -62,11 +63,10 @@ export default function MainPage() {
     setSelectedOffer(currentCard);
   };
 
-  const handleCurrentCityClick = (evt: SyntheticEvent<HTMLSpanElement>) => {
+  const handleCurrentCityClick = useCallback((evt: SyntheticEvent<HTMLSpanElement>) => {
     evt.preventDefault();
 
-    const currentOffer = selectOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
-
+    const currentOffer = initialOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
 
     if (currentOffer !== undefined) {
       setSelectedCity({ ...currentOffer.city });
@@ -77,7 +77,7 @@ export default function MainPage() {
       dispatch(offersAction.selectCity(evt.currentTarget.textContent));
     }
 
-  };
+  }, [selectOffers]);
 
   if (statusOffersDataLoading) {
     return <Loader />;

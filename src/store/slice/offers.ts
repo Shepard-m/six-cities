@@ -66,6 +66,7 @@ const offersSlice = createSlice({
     city: (state: TInitialState) => state.city,
     offers: (state: TInitialState) => state.offers,
     status: (state: TInitialState) => state.status,
+    initialOffers: (state: TInitialState) => state.initialOffers,
   }
 });
 

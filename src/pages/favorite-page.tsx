@@ -10,6 +10,7 @@ import { useAppDispatch } from '../hooks';
 import { useEffect } from 'react';
 import { fetchFavoriteAction } from '../store/api-action';
 import { favoriteSelectors } from '../store/slice/favorite';
+import Footer from '../components/footer';
 
 
 export default function FavoritePage() {
@@ -41,11 +42,7 @@ export default function FavoritePage() {
             </section> : <FavoritesEmpty />}
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
-      </footer>
+      <Footer />
     </Container>
   );
 }

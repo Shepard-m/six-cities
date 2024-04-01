@@ -5,7 +5,7 @@ import { TUser } from '../../types/user';
 
 type TInitialState = {
   status: string;
-  isOfferDataLoadingStatus: boolean;
+  isUserDataLoadingStatus: boolean;
   authorizationStatus: string;
   dataUser: TUser | null;
 }
@@ -13,7 +13,7 @@ type TInitialState = {
 const initialState: TInitialState = {
   status: RequestStatus.NONE,
   authorizationStatus: AuthorizationStatus.UN_KNOWN,
-  isOfferDataLoadingStatus: false,
+  isUserDataLoadingStatus: false,
   dataUser: null,
 };
 
@@ -21,29 +21,29 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginAction.pending, (state) => {
-        state.isOfferDataLoadingStatus = true;
+        state.isUserDataLoadingStatus = true;
       })
       .addCase(loginAction.fulfilled, (state) => {
-        state.isOfferDataLoadingStatus = false;
+        state.isUserDataLoadingStatus = false;
       })
       .addCase(logoutAction.pending, (state) => {
-        state.isOfferDataLoadingStatus = true;
+        state.isUserDataLoadingStatus = true;
       })
       .addCase(logoutAction.fulfilled, (state) => {
-        state.isOfferDataLoadingStatus = false;
+        state.isUserDataLoadingStatus = false;
         state.authorizationStatus = AuthorizationStatus.NO_AUTH;
         state.dataUser = null;
       })
       .addCase(checkAuthAction.pending, (state) => {
-        state.isOfferDataLoadingStatus = true;
+        state.isUserDataLoadingStatus = true;
       })
       .addCase(checkAuthAction.fulfilled, (state, action) => {
-        state.isOfferDataLoadingStatus = false;
+        state.isUserDataLoadingStatus = false;
         state.authorizationStatus = AuthorizationStatus.AUTH;
         state.dataUser = action.payload;
       })
       .addCase(checkAuthAction.rejected, (state) => {
-        state.isOfferDataLoadingStatus = false;
+        state.isUserDataLoadingStatus = false;
         state.authorizationStatus = AuthorizationStatus.NO_AUTH;
       });
   },

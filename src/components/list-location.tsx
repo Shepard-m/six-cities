@@ -1,4 +1,5 @@
 import Location from './location';
+import { memo } from 'react';
 import { SyntheticEvent } from 'react';
 import { listLocation } from '../types/list-location';
 
@@ -8,7 +9,7 @@ type ListLocation = {
   currentCity: string;
 }
 
-export default function ListLocation({ listLocations, handleCurrentCityClick, currentCity }: ListLocation) {
+function ListLocation({ listLocations, handleCurrentCityClick, currentCity }: ListLocation) {
   const listValuesLocations = Object.values(listLocations);
   return (
     <ul className="locations__list tabs__list">
@@ -16,3 +17,5 @@ export default function ListLocation({ listLocations, handleCurrentCityClick, cu
     </ul>
   );
 }
+
+export default memo(ListLocation);

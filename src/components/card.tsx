@@ -4,6 +4,7 @@ import Rating from './rating';
 import { AppRoute } from '../const';
 import ButtonFavorite from './button-favorite';
 import { SizeOptionButtonFavorite } from '../const';
+import { memo } from 'react';
 
 type TCardProps = {
   offer: OfferPreviews;
@@ -15,7 +16,7 @@ type TCardProps = {
   handelPointCardMouseOver?: (currentOffer: OfferPreviews | null) => void;
 }
 
-export default function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
+function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
   const { width, height, classCard } = optionCard;
 
   const onPointCardMouseOver = () => {
@@ -55,3 +56,5 @@ export default function Card({ offer, optionCard, handelPointCardMouseOver }: TC
     </article>
   );
 }
+
+export default memo(Card);
