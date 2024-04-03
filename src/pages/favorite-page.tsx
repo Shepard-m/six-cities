@@ -9,7 +9,7 @@ import { useAppSelector } from '../hooks';
 import { useAppDispatch } from '../hooks';
 import { useEffect } from 'react';
 import { fetchFavoriteAction } from '../store/api-action';
-import { favoriteSelectors } from '../store/slice/favorite';
+import { favoriteSelectors } from '../store/slice/favorite/favorite';
 import Footer from '../components/footer';
 
 

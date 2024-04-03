@@ -4,7 +4,7 @@ import ListCards from '../components/list-cards';
 import Map from '../components/map';
 import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import MainEmpty from '../components/main-empty';
-import { OptionListCard } from '../const';
+import { OptionListCard, RequestStatus } from '../const';
 import { OfferPreviews } from '../types/offer-preview';
 import { LocationCity } from '../const';
 import ListLocation from '../components/list-location';
@@ -12,15 +12,15 @@ import { useAppDispatch, useAppSelector } from '../hooks';
 import PlacesOptions from '../components/places-options';
 import Loader from '../components/loader/loader';
 import { fetchOffersAction } from '../store/api-action';
-import { offersSelectors } from '../store/slice/offers';
-import { offersAction } from '../store/slice/offers';
+import { offersSelectors } from '../store/slice/offers/offers';
+import { offersAction } from '../store/slice/offers/offers';
 
 export default function MainPage() {
   const selectOffers = useAppSelector(offersSelectors.offers);
   const initialOffers = useAppSelector(offersSelectors.initialOffers);
   const currentCity = useAppSelector(offersSelectors.city);
   const dispatch = useAppDispatch();
-  const statusOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
+  const offersStatus = useAppSelector(offersSelectors.offersStatus);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
@@ -79,7 +79,7 @@ export default function MainPage() {
 
   }, [selectOffers]);
 
-  if (statusOffersDataLoading) {
+  if (offersStatus === RequestStatus.LOADING) {
     return <Loader />;
   }
 

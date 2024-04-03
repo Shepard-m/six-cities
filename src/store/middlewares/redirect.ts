@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 import browserHistory from '../../browser-history';
 import { Middleware } from 'redux';
 import rootReducer from '../rootReduser';
-import { userAction } from '../slice/user';
+import { userAction } from '../slice/user/user';
 
 type Reducer = ReturnType<typeof rootReducer>;
 

@@ -1,9 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { fetchOfferAction } from '../api-action';
-import { Offer } from '../../types/offer';
-import { RequestStatus } from '../../const';
-import { fetchOfferNearbyAction } from '../api-action';
-import { OfferPreviews } from '../../types/offer-preview';
+import { fetchOfferAction } from '../../api-action';
+import { Offer } from '../../../types/offer';
+import { RequestStatus } from '../../../const';
+import { fetchOfferNearbyAction } from '../../api-action';
+import { OfferPreviews } from '../../../types/offer-preview';
 
 type TInitialState = {
   offerStatus: string;
@@ -31,6 +31,7 @@ const offerSlice = createSlice({
         state.offerStatus = RequestStatus.FAILED;
       })
       .addCase(fetchOfferNearbyAction.fulfilled, (state, action) => {
+        state.offerStatus = RequestStatus.SUCCESS;
         state.nearby = action.payload;
       });
   },
@@ -49,7 +50,7 @@ const offerSlice = createSlice({
     },
   },
   selectors: {
-    currentOffer: (state: TInitialState) => state.currentOffer,
+    currentOffer: (state: Pick<TInitialState, 'currentOffer'>) => state.currentOffer,
     nearby: (state: TInitialState) => state.nearby,
     offerStatus: (state: TInitialState) => state.offerStatus,
   }
@@ -60,5 +61,6 @@ const offerAction = { ...offerSlice.actions, fetchOfferAction };
 const offerSelector = offerSlice.selectors;
 
 export { offerAction, offerSelector, offerSlice };
+export type { TInitialState };
 
 

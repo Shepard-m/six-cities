@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { changeFavoriteAction, fetchFavoriteAction } from '../api-action';
-import { RequestStatus } from '../../const';
-import { OfferPreviews } from '../../types/offer-preview';
+import { changeFavoriteAction, fetchFavoriteAction } from '../../api-action';
+import { RequestStatus } from '../../../const';
+import { OfferPreviews } from '../../../types/offer-preview';
 
 type TInitialState = {
   statusFavorite: string;

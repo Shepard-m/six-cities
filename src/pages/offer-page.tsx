@@ -3,7 +3,7 @@ import OfferInside from '../components/offer-inside';
 import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
 import CommentsTemplate from '../components/comments-template';
-import { CountStar, SizeOptionButtonFavorite } from '../const';
+import { RequestStatus, SizeOptionButtonFavorite } from '../const';
 import ReviewsComments from '../components/reviews-comments';
 import Map from '../components/map';
 import { useEffect, useState } from 'react';
@@ -15,17 +15,17 @@ import { fetchCommentsAction, fetchOfferAction, fetchOfferNearbyAction } from '.
 import { useAppDispatch } from '../hooks';
 import { useParams } from 'react-router-dom';
 import Loader from '../components/loader/loader';
-import { offerSelector } from '../store/slice/offer';
-import { offersSelectors } from '../store/slice/offers';
-import { reviewsSelector } from '../store/slice/reviews';
-import { userSelector } from '../store/slice/user';
+import { offerSelector } from '../store/slice/offer/offer';
+import { offersSelectors } from '../store/slice/offers/offers';
+import { reviewsSelector } from '../store/slice/reviews/reviews';
+import { userSelector } from '../store/slice/user/user';
 import ButtonFavorite from '../components/button-favorite';
 
 export default function OfferPage() {
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
   const user = useAppSelector(userSelector.dataUser);
-  const isOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
+  const offersStatus = useAppSelector(offersSelectors.offersStatus);
   useEffect(() => {
     Promise.all([
       dispatch(fetchCommentsAction(offerId as string)),
@@ -50,7 +50,7 @@ export default function OfferPage() {
     return;
   }
 
-  if (isOffersDataLoading) {
+  if (offersStatus === RequestStatus.LOADING) {
     return <Loader />;
   }
 
@@ -128,7 +128,7 @@ export default function OfferPage() {
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <ReviewsComments comments={comments} />
-              {user !== null && <CommentsTemplate countStar={CountStar} offerId={offerId as string} />}
+              {user !== null && <CommentsTemplate offerId={offerId as string} />}
             </section>
           </div>
         </div>

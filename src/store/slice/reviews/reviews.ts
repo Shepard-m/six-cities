@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCommentsAction, fetchCommentAction } from '../api-action';
-import { RequestStatus } from '../../const';
-import { Comment } from '../../types/comment';
+import { fetchCommentsAction, fetchCommentAction } from '../../api-action';
+import { RequestStatus } from '../../../const';
+import { Comment } from '../../../types/comment';
 
 type TInitialState = {
   reviewsStatus: string;
@@ -39,11 +39,7 @@ const reviewsSlice = createSlice({
   },
   initialState,
   name: 'reviews',
-  reducers: {
-    clear(state) {
-      state.comments = [];
-    }
-  },
+  reducers: {},
   selectors: {
     comments: (state: TInitialState) => state.comments,
     reviewsStatus: (state: TInitialState) => state.reviewsStatus,

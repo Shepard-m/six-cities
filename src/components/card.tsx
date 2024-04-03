@@ -13,7 +13,7 @@ type TCardProps = {
     width: string;
     height: string;
   };
-  handelPointCardMouseOver?: (currentOffer: OfferPreviews | null) => void;
+  handelPointCardMouseOver: (currentOffer: OfferPreviews | null) => void;
 }
 
 function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {

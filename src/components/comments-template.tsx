@@ -2,7 +2,7 @@ import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import Stars from './stars';
 import { fetchCommentAction } from '../store/api-action';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { reviewsSelector } from '../store/slice/reviews';
+import { reviewsSelector } from '../store/slice/reviews/reviews';
 import { RequestStatus } from '../const';
 
 type CommentsTemplateProps = {

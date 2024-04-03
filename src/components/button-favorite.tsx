@@ -1,14 +1,13 @@
 import { changeFavoriteAction } from '../store/api-action';
 import { useAppDispatch, useAppSelector } from '../hooks';
-import { offerAction } from '../store/slice/offer';
-import { favoriteSelectors } from '../store/slice/favorite';
-import { offersAction, offersSelectors } from '../store/slice/offers';
-import { favoriteAction } from '../store/slice/favorite';
-import { userSelector } from '../store/slice/user';
+import { offerAction } from '../store/slice/offer/offer';
+import { favoriteSelectors } from '../store/slice/favorite/favorite';
+import { offersAction, offersSelectors } from '../store/slice/offers/offers';
+import { favoriteAction } from '../store/slice/favorite/favorite';
+import { userSelector } from '../store/slice/user/user';
 import { AppRoute, AuthorizationStatus, RequestStatus } from '../const';
 import { useNavigate } from 'react-router-dom';
 import { OfferPreviews } from '../types/offer-preview';
-import { useState } from 'react';
 
 type TButtonFavorite = {
   offerId: string;
@@ -24,7 +23,7 @@ export default function ButtonFavorite({ offerId, isFavorite, sizeOptionButtonFa
   const statusFavorite = useAppSelector(favoriteSelectors.statusFavorite);
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
   const offers = useAppSelector(offersSelectors.offers);
-  const [buttonActive, setButtonActive] = useState(+isFavorite);
+
   let status = +isFavorite;
   const { width, height, extraClass } = sizeOptionButtonFavorite;
   const dispatch = useAppDispatch();
@@ -37,11 +36,9 @@ export default function ButtonFavorite({ offerId, isFavorite, sizeOptionButtonFa
   function onIsFavoriteClick() {
     const favorite = offers.find((offer) => offer.id === offerId);
     if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-      setButtonActive(0);
       navigate(AppRoute.Login);
     }
 
-    setButtonActive(+!isFavorite);
     status = (+!isFavorite);
 
     dispatch(changeFavoriteAction({ offerId, status }));

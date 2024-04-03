@@ -6,8 +6,8 @@ import { useEffect } from 'react';
 import { checkAuthAction, fetchFavoriteAction } from '../store/api-action';
 import { logoutAction } from '../store/api-action';
 import { AuthorizationStatus } from '../const';
-import { userSelector } from '../store/slice/user';
-import { favoriteSelectors } from '../store/slice/favorite';
+import { userSelector } from '../store/slice/user/user';
+import { favoriteSelectors } from '../store/slice/favorite/favorite';
 
 type THeaderProps = {
   navigation: boolean;
