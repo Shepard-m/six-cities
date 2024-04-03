@@ -15,10 +15,13 @@ type THeaderProps = {
 
 function Header({ navigation }: THeaderProps) {
   const dispatch = useAppDispatch();
+  const dataUser = useAppSelector(userSelector.dataUser);
   const favorite = useAppSelector(favoriteSelectors.favorite);
   useEffect(() => {
     dispatch(checkAuthAction());
-    dispatch(fetchFavoriteAction());
+    if (dataUser !== null) {
+      dispatch(fetchFavoriteAction());
+    }
   }, []);
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
   const user = useAppSelector(userSelector.dataUser);
