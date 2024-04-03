@@ -1,24 +1,25 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../const';
+import { memo } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { useEffect } from 'react';
-import { checkAuthAction, fetchUserAction } from '../store/api-action';
+import { checkAuthAction, fetchFavoriteAction } from '../store/api-action';
 import { logoutAction } from '../store/api-action';
 import { AuthorizationStatus } from '../const';
 import { userSelector } from '../store/slice/user';
+import { favoriteSelectors } from '../store/slice/favorite';
 
 type THeaderProps = {
   navigation: boolean;
 }
 
-export default function Header({ navigation }: THeaderProps) {
+function Header({ navigation }: THeaderProps) {
   const dispatch = useAppDispatch();
-  // const favorite = useAppSelector((state) => state.favorite);
-  const favorite = [];
+  const favorite = useAppSelector(favoriteSelectors.favorite);
   useEffect(() => {
-    dispatch(fetchUserAction());
     dispatch(checkAuthAction());
-  }, [dispatch]);
+    dispatch(fetchFavoriteAction());
+  }, []);
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
   const user = useAppSelector(userSelector.dataUser);
 
@@ -70,4 +71,4 @@ export default function Header({ navigation }: THeaderProps) {
   );
 }
 
-
+export default memo(Header);

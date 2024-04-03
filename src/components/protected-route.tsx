@@ -25,12 +25,6 @@ export default function ProtectedRoute({ children, onlyUnAuth }: TProtectedRoute
     return <Navigate state={{ from: location }} to={AppRoute.Login} />;
   }
 
-  // return (
-  //   authorizationStatus === AuthorizationStatus.AUTH
-  //     ? children
-  //     : <Navigate to={AppRoute.Login} />
-  // );
-
   return children;
 }
 

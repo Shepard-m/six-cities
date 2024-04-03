@@ -3,7 +3,7 @@ import OfferInside from '../components/offer-inside';
 import Rating from '../components/rating';
 import { Helmet } from 'react-helmet-async';
 import CommentsTemplate from '../components/comments-template';
-import { CountStar } from '../const';
+import { CountStar, SizeOptionButtonFavorite } from '../const';
 import ReviewsComments from '../components/reviews-comments';
 import Map from '../components/map';
 import { useEffect, useState } from 'react';
@@ -18,10 +18,13 @@ import Loader from '../components/loader/loader';
 import { offerSelector } from '../store/slice/offer';
 import { offersSelectors } from '../store/slice/offers';
 import { reviewsSelector } from '../store/slice/reviews';
+import { userSelector } from '../store/slice/user';
+import ButtonFavorite from '../components/button-favorite';
 
 export default function OfferPage() {
   const dispatch = useAppDispatch();
   const { offerId } = useParams();
+  const user = useAppSelector(userSelector.dataUser);
   const isOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
   useEffect(() => {
     Promise.all([
@@ -78,12 +81,7 @@ export default function OfferPage() {
               <h1 className="offer__name">
                 {offer.title}
               </h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <ButtonFavorite offerId={offer.id} isFavorite={offer.isFavorite} sizeOptionButtonFavorite={SizeOptionButtonFavorite.offer} />
             </div>
             <Rating ratingClass='offer' rating={offer.rating} isRatingValue />
             <ul className="offer__features">
@@ -123,17 +121,14 @@ export default function OfferPage() {
               </div>
               <div className="offer__description">
                 <p className="offer__text">
-                  A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                </p>
-                <p className="offer__text">
-                  An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                  {offer.description}
                 </p>
               </div>
             </div>
             <section className="offer__reviews reviews">
               <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
               <ReviewsComments comments={comments} />
-              <CommentsTemplate countStar={CountStar} />
+              {user !== null && <CommentsTemplate countStar={CountStar} offerId={offerId as string} />}
             </section>
           </div>
         </div>

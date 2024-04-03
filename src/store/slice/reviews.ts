@@ -1,17 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCommentsAction } from '../api-action';
+import { fetchCommentsAction, fetchCommentAction } from '../api-action';
 import { RequestStatus } from '../../const';
 import { Comment } from '../../types/comment';
 
 type TInitialState = {
-  status: string;
-  isOfferDataLoadingStatus: boolean;
+  reviewsStatus: string;
   comments: Comment[];
 }
 
 const initialState: TInitialState = {
-  status: RequestStatus.NONE,
-  isOfferDataLoadingStatus: false,
+  reviewsStatus: RequestStatus.NONE,
   comments: [],
 };
 
@@ -19,16 +17,24 @@ const reviewsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchCommentsAction.pending, (state) => {
-        state.status = RequestStatus.LOADING;
+        state.reviewsStatus = RequestStatus.LOADING;
       })
       .addCase(fetchCommentsAction.fulfilled, (state, action) => {
-        state.status = RequestStatus.SUCCESS;
-        state.isOfferDataLoadingStatus = false;
+        state.reviewsStatus = RequestStatus.SUCCESS;
         state.comments = action.payload;
       })
       .addCase(fetchCommentsAction.rejected, (state) => {
-        state.isOfferDataLoadingStatus = false;
-        state.status = RequestStatus.FAILED;
+        state.reviewsStatus = RequestStatus.FAILED;
+      })
+      .addCase(fetchCommentAction.pending, (state) => {
+        state.reviewsStatus = RequestStatus.LOADING;
+      })
+      .addCase(fetchCommentAction.fulfilled, (state, action) => {
+        state.reviewsStatus = RequestStatus.SUCCESS;
+        state.comments.push(action.payload);
+      })
+      .addCase(fetchCommentAction.rejected, (state) => {
+        state.reviewsStatus = RequestStatus.FAILED;
       });
   },
   initialState,
@@ -40,6 +46,7 @@ const reviewsSlice = createSlice({
   },
   selectors: {
     comments: (state: TInitialState) => state.comments,
+    reviewsStatus: (state: TInitialState) => state.reviewsStatus,
   }
 });
 

@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { fetchOfferAction } from '../api-action';
 import { Offer } from '../../types/offer';
 import { RequestStatus } from '../../const';
@@ -6,15 +6,13 @@ import { fetchOfferNearbyAction } from '../api-action';
 import { OfferPreviews } from '../../types/offer-preview';
 
 type TInitialState = {
-  status: string;
-  isOfferDataLoadingStatus: boolean;
+  offerStatus: string;
   nearby: OfferPreviews[];
   currentOffer: Offer | null;
 }
 
 const initialState: TInitialState = {
-  status: RequestStatus.NONE,
-  isOfferDataLoadingStatus: false,
+  offerStatus: RequestStatus.NONE,
   nearby: [],
   currentOffer: null,
 };
@@ -23,20 +21,16 @@ const offerSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchOfferAction.pending, (state) => {
-        state.isOfferDataLoadingStatus = true;
-        state.status = RequestStatus.LOADING;
+        state.offerStatus = RequestStatus.LOADING;
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
-        state.isOfferDataLoadingStatus = false;
         state.currentOffer = action.payload;
-        state.status = RequestStatus.SUCCESS;
+        state.offerStatus = RequestStatus.SUCCESS;
       })
       .addCase(fetchOfferAction.rejected, (state) => {
-        state.isOfferDataLoadingStatus = false;
-        state.status = RequestStatus.FAILED;
+        state.offerStatus = RequestStatus.FAILED;
       })
       .addCase(fetchOfferNearbyAction.fulfilled, (state, action) => {
-        state.isOfferDataLoadingStatus = false;
         state.nearby = action.payload;
       });
   },
@@ -46,10 +40,18 @@ const offerSlice = createSlice({
     clear(state) {
       state.currentOffer = null;
     },
+    addOfferNearbyToFavorites: (state, action: PayloadAction<{ offerId: string; isFavorite: boolean }>) => {
+      state.nearby.map((offer) => {
+        if (offer.id === action.payload.offerId) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
+    },
   },
   selectors: {
     currentOffer: (state: TInitialState) => state.currentOffer,
     nearby: (state: TInitialState) => state.nearby,
+    offerStatus: (state: TInitialState) => state.offerStatus,
   }
 });
 

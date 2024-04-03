@@ -2,7 +2,7 @@ import Container from '../components/container';
 import { City } from '../types/city';
 import ListCards from '../components/list-cards';
 import Map from '../components/map';
-import { SyntheticEvent, useEffect, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useState } from 'react';
 import MainEmpty from '../components/main-empty';
 import { OptionListCard } from '../const';
 import { OfferPreviews } from '../types/offer-preview';
@@ -13,17 +13,18 @@ import PlacesOptions from '../components/places-options';
 import Loader from '../components/loader/loader';
 import { fetchOffersAction } from '../store/api-action';
 import { offersSelectors } from '../store/slice/offers';
-import { selectCity, sortOffer } from '../store/slice/offers';
+import { offersAction } from '../store/slice/offers';
 
 export default function MainPage() {
   const selectOffers = useAppSelector(offersSelectors.offers);
+  const initialOffers = useAppSelector(offersSelectors.initialOffers);
   const currentCity = useAppSelector(offersSelectors.city);
   const dispatch = useAppDispatch();
   const statusOffersDataLoading = useAppSelector(offersSelectors.isOffersDataLoading);
 
   useEffect(() => {
     dispatch(fetchOffersAction());
-    dispatch(selectCity(currentCity));
+    dispatch(offersAction.selectCity(currentCity));
   }, [currentCity, dispatch]);
 
   const [selectedOffer, setSelectedOffer] = useState<OfferPreviews | null>(
@@ -49,7 +50,7 @@ export default function MainPage() {
   const [selectedLocation, setSelectedLocation] = useState<string>(currentCity);
 
   const handelSortOfferClick = (sortType: string) => {
-    dispatch(sortOffer(sortType));
+    dispatch(offersAction.sortOffer(sortType));
     setIsOpenSort(!isOpenSort);
     setSortName(sortType);
   };
@@ -62,11 +63,10 @@ export default function MainPage() {
     setSelectedOffer(currentCard);
   };
 
-  const handleCurrentCityClick = (evt: SyntheticEvent<HTMLSpanElement>) => {
+  const handleCurrentCityClick = useCallback((evt: SyntheticEvent<HTMLSpanElement>) => {
     evt.preventDefault();
 
-    const currentOffer = selectOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
-
+    const currentOffer = initialOffers.find((offer) => offer.city.name === evt.currentTarget.textContent);
 
     if (currentOffer !== undefined) {
       setSelectedCity({ ...currentOffer.city });
@@ -74,10 +74,10 @@ export default function MainPage() {
 
     if (evt.currentTarget.tagName === 'SPAN' && evt.currentTarget.textContent !== null) {
       setSelectedLocation(evt.currentTarget.textContent);
-      dispatch(selectCity(evt.currentTarget.textContent));
+      dispatch(offersAction.selectCity(evt.currentTarget.textContent));
     }
 
-  };
+  }, [selectOffers]);
 
   if (statusOffersDataLoading) {
     return <Loader />;

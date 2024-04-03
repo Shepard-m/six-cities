@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { OfferPreviews } from '../types/offer-preview';
 import Rating from './rating';
 import { AppRoute } from '../const';
+import ButtonFavorite from './button-favorite';
+import { SizeOptionButtonFavorite } from '../const';
+import { memo } from 'react';
 
 type TCardProps = {
   offer: OfferPreviews;
@@ -13,7 +16,7 @@ type TCardProps = {
   handelPointCardMouseOver?: (currentOffer: OfferPreviews | null) => void;
 }
 
-export default function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
+function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
   const { width, height, classCard } = optionCard;
 
   const onPointCardMouseOver = () => {
@@ -42,12 +45,7 @@ export default function Card({ offer, optionCard, handelPointCardMouseOver }: TC
             <b className="place-card__price-value" >&euro;{offer.price}</b>
             <span className="place-card__price-text" >&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button" >
-            <svg className="place-card__bookmark-icon" width="18" height="19" >
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
+          <ButtonFavorite offerId={offer.id} isFavorite={offer.isFavorite} sizeOptionButtonFavorite={SizeOptionButtonFavorite.card} />
         </div>
         <Rating ratingClass="place-card" rating={offer.rating} />
         <h2 className="place-card__name" >
@@ -58,3 +56,5 @@ export default function Card({ offer, optionCard, handelPointCardMouseOver }: TC
     </article>
   );
 }
+
+export default memo(Card);
