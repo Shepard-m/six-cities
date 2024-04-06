@@ -1,5 +1,5 @@
 import { Comment } from '../types/comment';
-import ReviewItem from './review-item';
+import ReviewItem from './review-item/review-item';
 
 type ListCommentsProps = {
   comments: Comment[];

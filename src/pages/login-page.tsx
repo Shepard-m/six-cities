@@ -1,8 +1,10 @@
 import { Helmet } from 'react-helmet-async';
 import { useRef, FormEvent } from 'react';
 import { loginAction } from '../store/api-action';
-import { useAppDispatch } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import Container from '../components/container';
+import { userSelector } from '../store/slice/user/user';
+import { RequestStatus } from '../const';
 
 type LoginPage = {
   navigation: boolean;
@@ -25,6 +27,8 @@ export default function LoginPage({ navigation }: LoginPage) {
     }
   };
 
+  const userStatus = useAppSelector(userSelector.userStatus);
+
   return (
     <Container mainClass='page__main--login' pageClass='page--gray page--login' navigation={navigation}>
       <Helmet>
@@ -46,6 +50,7 @@ export default function LoginPage({ navigation }: LoginPage) {
                 className="login__input form__input"
                 type="email" name="email"
                 placeholder="Email"
+                disabled={userStatus === RequestStatus.LOADING}
                 required
               />
             </div>
@@ -55,11 +60,13 @@ export default function LoginPage({ navigation }: LoginPage) {
                 ref={passwordRef}
                 className="login__input form__input"
                 type="password" name="password"
+                minLength={1}
+                disabled={userStatus === RequestStatus.LOADING}
                 placeholder="Password"
                 required
               />
             </div>
-            <button className="login__submit form__submit button" type="submit">Sign in</button>
+            <button className="login__submit form__submit button" disabled={userStatus === RequestStatus.LOADING} type="submit">Sign in</button>
           </form>
         </section>
         <section className="locations locations--login locations--current">

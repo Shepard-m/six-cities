@@ -12,6 +12,6 @@ export default function PlacesOption({ place, handelSortOfferClick }: PlacesOpti
     }
   };
   return (
-    <li className="places__option" tabIndex={0} onClick={onSortOfferClick}>{place}</li>
+    <li className="places__option" tabIndex={0} onClick={onSortOfferClick} data-testid={'places-option'}>{place}</li>
   );
 }

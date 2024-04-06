@@ -81,14 +81,14 @@ export const changeFavoriteAction = createAsyncThunk<OfferPreviews, ChangeFavori
   async ({ offerId, status }, { extra: api }) => {
     const { data } = await api.post<OfferPreviews>(`${APIRoute.FAVORITE}/${offerId}/${status}`);
 
-    return { data };
+    return data;
   }
 );
 
 export const fetchCommentAction = createAsyncThunk<Comment, TApiComment, { extra: AxiosInstance }>(
   'data/fetchComment',
   async ({ offerId, rating, comment }, { extra: api }) => {
-    const { data } = await api.post<OfferPreviews[]>(`${APIRoute.COMMENTS}/${offerId}`, { rating, comment });
+    const { data } = await api.post<Comment>(`${APIRoute.COMMENTS}/${offerId}`, { rating, comment });
     return { ...data };
   }
 );

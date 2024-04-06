@@ -1,5 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
-import Stars from './stars';
+import Stars from './stars/stars';
 import { fetchCommentAction } from '../store/api-action';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import { reviewsSelector } from '../store/slice/reviews/reviews';
@@ -46,8 +46,7 @@ export default function CommentsTemplate({ offerId }: CommentsTemplateProps) {
       .unwrap()
       .then(() => {
         setReview({ comment: '', rating: 0 });
-        setIsCorrectnessForm(true);
-        evt.currentTarget.reset();
+        setIsCorrectnessForm(false);
       })
       .catch(() => {
         setIsCorrectnessForm(true);
@@ -58,10 +57,8 @@ export default function CommentsTemplate({ offerId }: CommentsTemplateProps) {
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={onSendReviewsSubmit} >
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
-      <div className="reviews__rating-form form__rating">
-        <Stars onChooseRating={onChooseRating} />
-      </div>
-      <textarea className="reviews__textarea form__textarea" minLength={50} maxLength={300} id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" defaultValue={''} onInput={onInputCommentKeyDown} />
+      <Stars onChooseRating={onChooseRating} rating={review.rating} />
+      <textarea className="reviews__textarea form__textarea" disabled={reviewsStatus === RequestStatus.LOADING} minLength={50} maxLength={300} id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved" value={review.comment} onInput={onInputCommentKeyDown} />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.

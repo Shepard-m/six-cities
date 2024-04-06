@@ -1,16 +1,16 @@
 import Container from '../components/container';
-import Card from '../components/card';
-import FavoriteItems from '../components/favorite-items';
+import Card from '../components/card/card';
+import FavoriteItems from '../components/favorite-items/favorite-items';
 import { Helmet } from 'react-helmet-async';
 import { OptionCard } from '../const';
-import FavoritesEmpty from '../components/favorites-empty';
+import FavoritesEmpty from '../components/favorites-empty/favorites-empty';
 import { getFavoritesByLocation } from '../utils/utils';
 import { useAppSelector } from '../hooks';
 import { useAppDispatch } from '../hooks';
 import { useEffect } from 'react';
 import { fetchFavoriteAction } from '../store/api-action';
 import { favoriteSelectors } from '../store/slice/favorite/favorite';
-import Footer from '../components/footer';
+import Footer from '../components/footer/footer';
 
 
 export default function FavoritePage() {
@@ -34,7 +34,7 @@ export default function FavoritePage() {
               <ul className="favorites__list">
                 {Object.entries(favorites).map(([location, gropedFavorites]) => (
                   <FavoriteItems key={location} city={location}>
-                    {gropedFavorites.map((favorite) => <Card key={favorite.id} optionCard={OptionCard.FAVORITES_CARD} offer={favorite} />)}
+                    {gropedFavorites.map((favorite) => <Card key={favorite.id} optionCard={OptionCard.FAVORITES_CARD} offer={favorite} handelPointCardMouseOver={() => { }} />)}
                   </FavoriteItems>
                 )
                 )}

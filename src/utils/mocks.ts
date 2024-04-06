@@ -1,4 +1,14 @@
-const mocksOfferPreviews = {
+import { Comment } from '../types/comment';
+import { Offer } from '../types/offer';
+import { ThunkDispatch } from 'redux-thunk';
+import { OfferPreviews } from '../types/offer-preview';
+import { State } from '../types/state';
+import { Action } from 'redux';
+import { createAPI } from '../service/api';
+
+export type AppThunkDispatch = ThunkDispatch<State, ReturnType<typeof createAPI>, Action>;
+
+const mocksOfferPreviews: OfferPreviews = {
   id: 'ea168f47-f416-422d-9daf-e4116c7e81e7',
   title: 'The house among olive ',
   type: 'apartment',
@@ -93,7 +103,7 @@ const listMocksOffersPreviews = [
   },
 ];
 
-const mockOffer = {
+const mockOffer: Offer = {
   id: 'ea168f47-f416-422d-9daf-e4116c7e81e7',
   title: 'The house among olive ',
   description: 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
@@ -147,7 +157,7 @@ const mockFetchCommentUser = {
   rating: 5,
 };
 
-const mockComment = {
+const mockComment: Comment = {
   id: 'offerId',
   date: '2024-03-11T21:00:00.018Z',
   user: {

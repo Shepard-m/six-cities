@@ -1,6 +1,6 @@
-import { OptionCard } from '../const';
-import Card from './card';
-import { OfferPreviews } from '../types/offer-preview';
+import { OptionCard } from '../../const';
+import Card from '../card/card';
+import { OfferPreviews } from '../../types/offer-preview';
 
 type ListOfferNearbyProps = {
   offers: OfferPreviews[];
@@ -15,7 +15,7 @@ export default function ListCards({ offers, onListItemHover, extraClass }: ListO
   };
 
   return (
-    <div className={extraClass}>
+    <div className={extraClass} data-testid={'list-component'}>
       {offers.map((offer) => <Card key={offer.id} optionCard={OptionCard.CITIES_CARD} offer={offer} handelPointCardMouseOver={handelPointingCardMouseOver} />)}
     </div>
   );

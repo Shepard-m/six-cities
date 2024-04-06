@@ -1,6 +1,6 @@
 import Container from '../components/container';
-import OfferInside from '../components/offer-inside';
-import Rating from '../components/rating';
+import OfferInside from '../components/offer-inside/offer-inside';
+import Rating from '../components/rating/rating';
 import { Helmet } from 'react-helmet-async';
 import CommentsTemplate from '../components/comments-template';
 import { RequestStatus, SizeOptionButtonFavorite } from '../const';
@@ -8,7 +8,7 @@ import ReviewsComments from '../components/reviews-comments';
 import Map from '../components/map';
 import { useEffect, useState } from 'react';
 import { OptionListCard } from '../const';
-import ListCards from '../components/list-cards';
+import ListCards from '../components/list-card/list-cards';
 import { OfferPreviews } from '../types/offer-preview';
 import { useAppSelector } from '../hooks';
 import { fetchCommentsAction, fetchOfferAction, fetchOfferNearbyAction } from '../store/api-action';
@@ -19,7 +19,7 @@ import { offerSelector } from '../store/slice/offer/offer';
 import { offersSelectors } from '../store/slice/offers/offers';
 import { reviewsSelector } from '../store/slice/reviews/reviews';
 import { userSelector } from '../store/slice/user/user';
-import ButtonFavorite from '../components/button-favorite';
+import ButtonFavorite from '../components/button-favorite/button-favorite';
 
 export default function OfferPage() {
   const dispatch = useAppDispatch();

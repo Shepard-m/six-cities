@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
-import { OfferPreviews } from '../types/offer-preview';
-import Rating from './rating';
-import { AppRoute } from '../const';
-import ButtonFavorite from './button-favorite';
-import { SizeOptionButtonFavorite } from '../const';
+import { OfferPreviews } from '../../types/offer-preview';
+import Rating from '../rating/rating';
+import { AppRoute } from '../../const';
+import ButtonFavorite from '../button-favorite/button-favorite';
+import { SizeOptionButtonFavorite } from '../../const';
 import { memo } from 'react';
 
 type TCardProps = {
@@ -28,7 +28,7 @@ function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
   };
 
   return (
-    <article className={`${classCard} place-card`} onMouseOver={onPointCardMouseOver} onMouseLeave={onPointCardMouseLeave}>
+    <article className={`${classCard} place-card`} onMouseOver={onPointCardMouseOver} onMouseLeave={onPointCardMouseLeave} data-testid={optionCard.classCard}>
       {offer.isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
