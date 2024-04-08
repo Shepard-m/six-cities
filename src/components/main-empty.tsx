@@ -1,7 +1,5 @@
-import { City } from '../types/city';
-
 type MainEmptyProps = {
-  currentCity: City;
+  currentCity: string;
 }
 
 export default function MainEmpty({ currentCity }: MainEmptyProps) {
@@ -9,7 +7,7 @@ export default function MainEmpty({ currentCity }: MainEmptyProps) {
     <section className="cities__no-places">
       <div className="cities__status-wrapper tabs__content">
         <b className="cities__status">No places to stay available</b>
-        <p className="cities__status-description">We could not find any property available at the moment in {currentCity.name}</p>
+        <p className="cities__status-description" data-testid={'main-empty-text'}>We could not find any property available at the moment in {currentCity}</p>
       </div>
     </section>
   );

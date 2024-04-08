@@ -11,7 +11,6 @@ import { OfferPreviews } from '../types/offer-preview';
 
 type TButtonFavorite = {
   offerId: string;
-  isFavorite: boolean;
   sizeOptionButtonFavorite: {
     extraClass: string;
     width: string;
@@ -19,38 +18,41 @@ type TButtonFavorite = {
   };
 }
 
-export default function ButtonFavorite({ offerId, isFavorite, sizeOptionButtonFavorite }: TButtonFavorite) {
+export default function ButtonFavorite({ offerId, sizeOptionButtonFavorite }: TButtonFavorite) {
   const statusFavorite = useAppSelector(favoriteSelectors.statusFavorite);
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
   const offers = useAppSelector(offersSelectors.offers);
-
-  let status = +isFavorite;
+  const favorite = offers.find((offer) => offer.id === offerId);
+  let statusActive = favorite?.isFavorite;
   const { width, height, extraClass } = sizeOptionButtonFavorite;
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
-    status = 0;
+  if (authorizationStatus !== AuthorizationStatus.AUTH) {
+    statusActive = false;
   }
 
+
   function onIsFavoriteClick() {
-    const favorite = offers.find((offer) => offer.id === offerId);
-    if (authorizationStatus === AuthorizationStatus.NO_AUTH) {
+    if (authorizationStatus !== AuthorizationStatus.AUTH) {
       navigate(AppRoute.Login);
     }
-
-    status = (+!isFavorite);
-
-    dispatch(changeFavoriteAction({ offerId, status }));
-    dispatch(offerAction.addOfferNearbyToFavorites({ offerId, isFavorite: !isFavorite }));
-    dispatch(offersAction.addOfferToFavorites({ offerId, isFavorite: !isFavorite }));
-    dispatch(favoriteAction.addOfferToFavorites({ offer: favorite as OfferPreviews, isFavorite: !isFavorite }));
-
-
+    statusActive = !favorite?.isFavorite;
+    const status = +!favorite?.isFavorite;
+    dispatch(changeFavoriteAction({ offerId, status }))
+      .unwrap()
+      .then(() => {
+        Promise.all([
+          dispatch(offerAction.addOfferNearbyToFavorites({ offerId, isFavorite: !favorite?.isFavorite })),
+          dispatch(offersAction.addOfferToFavorites({ offerId, isFavorite: !favorite?.isFavorite })),
+          dispatch(favoriteAction.addOfferToFavorites({ offer: favorite as OfferPreviews, isFavorite: !favorite?.isFavorite })),
+        ]);
+      })
+      .catch(() => { });
   }
 
   return (
-    <button className={`${extraClass}__bookmark-button button ${status === 1 && `${extraClass}__bookmark-button--active`}`} type="button" onClick={onIsFavoriteClick} disabled={statusFavorite === RequestStatus.LOADING}>
+    <button className={`${extraClass}__bookmark-button button ${statusActive === true && `${extraClass}__bookmark-button--active`}`} data-testid={'button-favorite'} type="button" onClick={onIsFavoriteClick} disabled={statusFavorite === RequestStatus.LOADING}>
       <svg className={`${extraClass}__bookmark-icon`} width={width} height={height}>
         <use xlinkHref="#icon-bookmark" />
       </svg>

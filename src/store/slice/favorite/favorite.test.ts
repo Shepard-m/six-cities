@@ -1,5 +1,4 @@
 import { RequestStatus } from '../../../const';
-import { OfferPreviews } from '../../../types/offer-preview';
 import { mocksOfferPreviews } from '../../../utils/mocks';
 import { changeFavoriteAction, fetchFavoriteAction } from '../../api-action';
 import { favoriteSlice, favoriteAction } from './favorite';
@@ -88,7 +87,7 @@ describe('Favorite Slice', () => {
       favorite: [mocksOfferPreviews],
     };
 
-    const result = favoriteSlice.reducer(initialState, favoriteAction.addOfferToFavorites({ offer: mocksOfferPreviews as OfferPreviews, isFavorite: true }));
+    const result = favoriteSlice.reducer(initialState, favoriteAction.addOfferToFavorites({ offer: mocksOfferPreviews, isFavorite: true }));
 
     expect(result).toEqual(expectedState);
   });
@@ -102,7 +101,7 @@ describe('Favorite Slice', () => {
       favorite: [],
     };
 
-    const result = favoriteSlice.reducer(favoriteState, favoriteAction.addOfferToFavorites({ offer: mocksOfferPreviews as OfferPreviews, isFavorite: false }));
+    const result = favoriteSlice.reducer(favoriteState, favoriteAction.addOfferToFavorites({ offer: mocksOfferPreviews, isFavorite: false }));
 
     expect(result).toEqual(expectedState);
   });

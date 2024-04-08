@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../const';
+import { AppRoute } from '../../const';
 import { memo } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect } from 'react';
-import { checkAuthAction, fetchFavoriteAction } from '../store/api-action';
-import { logoutAction } from '../store/api-action';
-import { AuthorizationStatus } from '../const';
-import { userSelector } from '../store/slice/user/user';
-import { favoriteSelectors } from '../store/slice/favorite/favorite';
+import { checkAuthAction, fetchFavoriteAction } from '../../store/api-action';
+import { logoutAction } from '../../store/api-action';
+import { AuthorizationStatus } from '../../const';
+import { userSelector } from '../../store/slice/user/user';
+import { favoriteSelectors } from '../../store/slice/favorite/favorite';
+import { dropToken, getToken } from '../../service/token';
+import { toast } from 'react-toastify';
+import { textError } from '../../const';
 
 type THeaderProps = {
   navigation: boolean;
@@ -15,23 +18,31 @@ type THeaderProps = {
 
 function Header({ navigation }: THeaderProps) {
   const dispatch = useAppDispatch();
-  const dataUser = useAppSelector(userSelector.dataUser);
+  const token = getToken();
   const favorite = useAppSelector(favoriteSelectors.favorite);
   useEffect(() => {
-    dispatch(checkAuthAction());
-    if (dataUser !== null) {
+    if (token !== '') {
+      dispatch(checkAuthAction());
       dispatch(fetchFavoriteAction());
+    } else {
+      toast.warn(textError.textLackOfAuthorization);
     }
   }, []);
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
   const user = useAppSelector(userSelector.dataUser);
 
   const logoutAccount = () => {
-    dispatch(logoutAction());
+    dispatch(logoutAction())
+      .unwrap()
+      .then(() => {
+        dropToken();
+      })
+      .catch();
+
   };
 
   return (
-    <header className="header">
+    <header className="header" data-testid={'header'}>
       <div className="container">
         <div className="header__wrapper">
           <div className="header__left">

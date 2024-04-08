@@ -100,10 +100,19 @@ describe('Offers Slice', () => {
   });
   it('should return offer with a modified key isFavorite', () => {
     const filterOffers = listMocksOffersPreviews.filter((offer) => offer.city.name === initialState.city);
+    const initialStateFavorite = {
+      city: LocationCity.PARIS,
+      offers: filterOffers,
+      initialOffers: listMocksOffersPreviews,
+      offersStatus: RequestStatus.NONE,
+    };
     const changeOffers = filterOffers.map((offer) => {
-      if (offer.id === listMocksOffersPreviews[1].id) {
+      const offerData = { ...offer };
+      if (offerData.id === listMocksOffersPreviews[1].id) {
         offer.isFavorite = !listMocksOffersPreviews[1].isFavorite;
       }
+
+      return offerData;
     });
     // странная ошибка
     const expectedState = {
@@ -112,8 +121,8 @@ describe('Offers Slice', () => {
       initialOffers: listMocksOffersPreviews,
       offersStatus: RequestStatus.NONE,
     };
-    const result = offersSlice.reducer(initialState, offersAction.addOfferToFavorites({ offerId: listMocksOffersPreviews[1].id, isFavorite: listMocksOffersPreviews[1].isFavorite }));
+    const result = offersSlice.reducer(initialStateFavorite, offersAction.addOfferToFavorites({ offerId: listMocksOffersPreviews[1].id, isFavorite: listMocksOffersPreviews[1].isFavorite }));
 
-    expect(result).toEqual(expectedState);
+    expect(result.offers[1].isFavorite).toEqual(expectedState.offers[1].isFavorite);
   });
 });

@@ -1,14 +1,16 @@
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { memo, useEffect, useRef } from 'react';
-import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../const';
-import { City } from '../types/city';
-import useMap from '../hooks/useMap';
-import { OfferPreviews } from '../types/offer-preview';
-import { MapSize } from '../const';
+import { URL_MARKER_DEFAULT, URL_MARKER_CURRENT } from '../../const';
+import { City } from '../../types/city';
+import useMap from '../../hooks/useMap';
+import { OfferPreviews } from '../../types/offer-preview';
+import { MapSize } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { offersSelectors } from '../../store/slice/offers/offers';
 
 type MapProps = {
-  city: City;
+  city: string;
   offers: OfferPreviews[];
   selectedOffer: OfferPreviews | null;
 };
@@ -25,10 +27,12 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
+
 function Map({ city, offers, selectedOffer }: MapProps): JSX.Element {
-  // console.log(city);
+  const initialOffers = useAppSelector(offersSelectors.initialOffers);
+  const currentCity = initialOffers.find((offer) => offer.city.name === city);
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, currentCity?.city as City);
 
   useEffect(() => {
     if (map) {
@@ -51,12 +55,13 @@ function Map({ city, offers, selectedOffer }: MapProps): JSX.Element {
     }
 
 
-  }, [map, offers, selectedOffer, city]);
+  }, [map, offers, selectedOffer, currentCity]);
 
   return (
     <div
       ref={mapRef}
       style={{ width: MapSize.WIDTH, height: MapSize.HEIGHT }}
+      data-testid={'map'}
     >
 
     </div>

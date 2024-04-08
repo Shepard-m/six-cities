@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { AppRoute, AuthorizationStatus, RequestStatus } from '../../../const';
+import { createSlice } from '@reduxjs/toolkit';
+import { AuthorizationStatus, RequestStatus } from '../../../const';
 import { checkAuthAction, loginAction, logoutAction } from '../../api-action';
 import { TUser } from '../../../types/user';
 
@@ -24,6 +24,9 @@ const userSlice = createSlice({
       .addCase(loginAction.fulfilled, (state) => {
         state.userStatus = RequestStatus.SUCCESS;
       })
+      .addCase(loginAction.rejected, (state) => {
+        state.userStatus = RequestStatus.FAILED;
+      })
       .addCase(logoutAction.pending, (state) => {
         state.userStatus = RequestStatus.LOADING;
       })
@@ -31,6 +34,10 @@ const userSlice = createSlice({
         state.userStatus = RequestStatus.SUCCESS;
         state.authorizationStatus = AuthorizationStatus.NO_AUTH;
         state.dataUser = null;
+      })
+      .addCase(logoutAction.rejected, (state) => {
+        state.userStatus = RequestStatus.FAILED;
+        state.authorizationStatus = AuthorizationStatus.NO_AUTH;
       })
       .addCase(checkAuthAction.pending, (state) => {
         state.userStatus = RequestStatus.LOADING;
@@ -48,9 +55,6 @@ const userSlice = createSlice({
   initialState,
   name: 'user',
   reducers: {
-    redirectToRoute: (state, action: PayloadAction<AppRoute>) => {
-
-    },
   },
   selectors: {
     dataUser: (state: Pick<TInitialState, 'dataUser'>) => state.dataUser,

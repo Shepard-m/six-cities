@@ -31,8 +31,8 @@ const OptionListCard = {
 
 const ListSort = {
   SORT_POPULAR: 'Popular',
-  SORT_PRICE_HIGH: 'Price: low to high',
-  SORT_PRICE_LOW: 'Price: high to low',
+  SORT_PRICE_LOW: 'Price: low to high',
+  SORT_PRICE_HIGH: 'Price: high to low',
   SORT_RATED: 'Top rated first',
 };
 
@@ -79,6 +79,21 @@ const SizeOptionButtonFavorite = {
   }
 };
 
+const PagesMainClass = {
+  FAVORITES: 'page__main--favorites',
+  FAVORITES_EMPTY: 'page__main--favorites-empty',
+  MAIN: 'page__main--index',
+  MAIN_EMPTY: 'page__main--index-empty',
+  OFFER: 'page__main--offer',
+  LOGIN: 'page__main--login',
+};
+
+const PagesClass = {
+  FAVORITES_EMPTY: 'page--favorites-empty',
+  MAIN: 'page--gray page--main',
+  LOGIN: 'page--gray page--login',
+};
+
 const countStars = {
   one: 1,
   two: 2,
@@ -86,6 +101,23 @@ const countStars = {
   foo: 4,
   five: 5
 };
+
+const OptionValidationFormReviews = {
+  MAX_LENGTH: 300,
+  MIN_LENGTH: 50,
+  RATING: 0,
+};
+
+const textError = {
+  textErrorAddOfferInFavorite: 'an error occurred when adding a suggestion to favorites',
+  textErrorCorrectValidationForm: 'an error occurred when adding a suggestion to favorites',
+  textLackOfAuthorization: 'the user is not logged in',
+  textSuccessAuthorization: 'you have successfully logged in',
+  textFailedAuthorization: 'an error occurred during authorization',
+  textFailedSendComment: 'an error occurred when sending a comment',
+};
+
+const mainEmptyClassContainer = 'cities__places-container--empty';
 
 
 const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
@@ -95,4 +127,4 @@ const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
 
 const CountStar: number = 5;
 
-export { CountStar, AppRoute, countStars, SizeOptionButtonFavorite, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
+export { CountStar, OptionValidationFormReviews, textError, mainEmptyClassContainer, PagesClass, PagesMainClass, AppRoute, countStars, SizeOptionButtonFavorite, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };

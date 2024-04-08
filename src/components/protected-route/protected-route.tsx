@@ -1,7 +1,7 @@
 import { Location, Navigate, useLocation } from 'react-router-dom';
-import { AppRoute } from '../const';
-import { useAppSelector } from '../hooks';
-import { userSelector } from '../store/slice/user/user';
+import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { userSelector } from '../../store/slice/user/user';
 
 type TProtectedRouteProps = {
   children: JSX.Element;
