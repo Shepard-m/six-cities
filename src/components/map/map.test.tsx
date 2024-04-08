@@ -6,7 +6,7 @@ import { mocksOfferPreviews } from '../../utils/mocks';
 describe('Map', () => {
   it('should return component Map', () => {
     const mapTestId = 'map';
-    const footerComponent = withHistory(<Map city={mocksOfferPreviews.city} offers={[mocksOfferPreviews]} selectedOffer={mocksOfferPreviews} />);
+    const footerComponent = withHistory(<Map city={'Paris'} offers={[mocksOfferPreviews]} selectedOffer={mocksOfferPreviews} />);
 
     render(footerComponent);
 
