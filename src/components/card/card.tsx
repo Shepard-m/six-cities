@@ -5,19 +5,16 @@ import { AppRoute } from '../../const';
 import ButtonFavorite from '../button-favorite/button-favorite';
 import { SizeOptionButtonFavorite } from '../../const';
 import { memo } from 'react';
+import { OptionCard } from '../../const';
 
 type TCardProps = {
   offer: OfferPreviews;
-  optionCard: {
-    classCard: string;
-    width: string;
-    height: string;
-  };
+  optionCard: typeof OptionCard.CITIES_CARD;
   handelPointCardMouseOver: (currentOffer: OfferPreviews | null) => void;
 }
 
 function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
-  const { width, height, classCard } = optionCard;
+  const { width, height, classCard, additionalOptions } = optionCard;
 
   const onPointCardMouseOver = () => {
     handelPointCardMouseOver(offer);
@@ -34,12 +31,12 @@ function Card({ offer, optionCard, handelPointCardMouseOver }: TCardProps) {
           <span>Premium</span>
         </div>}
 
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${additionalOptions.imageWrapper}cities__image-wrapper place-card__image-wrapper`}>
         <Link to={`/${AppRoute.Offer}/${offer.id}`}>
           <img className="place-card__image" src={`${offer.previewImage}`} width={width} height={height} alt="Place image" />
         </Link>
       </div>
-      <div className="place-card__info" >
+      <div className={`${additionalOptions.infoWrapper}place-card__info`} >
         <div className="place-card__price-wrapper" >
           <div className="place-card__price" >
             <b className="place-card__price-value" >&euro;{offer.price}</b>

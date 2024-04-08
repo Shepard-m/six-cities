@@ -9,12 +9,20 @@ const OptionCard = {
   CITIES_CARD: {
     classCard: 'cities__card',
     width: '260',
-    height: '200'
+    height: '200',
+    additionalOptions: {
+      imageWrapper: ' ',
+      infoWrapper: ' ',
+    }
   },
   FAVORITES_CARD: {
     classCard: 'favorites__card',
     width: '150',
-    height: '110'
+    height: '110',
+    additionalOptions: {
+      imageWrapper: 'favorites__image-wrapper ',
+      infoWrapper: 'favorites__card-info ',
+    }
   }
 };
 
