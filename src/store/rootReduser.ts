@@ -1,9 +1,9 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { offersSlice } from './slice/offers';
-import { offerSlice } from './slice/offer';
-import { favoriteSlice } from './slice/favorite';
-import { reviewsSlice } from './slice/reviews';
-import { userSlice } from './slice/user';
+import { offersSlice } from './slice/offers/offers';
+import { offerSlice } from './slice/offer/offer';
+import { favoriteSlice } from './slice/favorite/favorite';
+import { reviewsSlice } from './slice/reviews/reviews';
+import { userSlice } from './slice/user/user';
 
 const rootReducer = combineReducers({
   [offersSlice.name]: offersSlice.reducer,

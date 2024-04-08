@@ -5,7 +5,7 @@ import './not-found-page-model.css';
 
 export default function NotFoundPage() {
   return (
-    <div className='not-found-page-model'>
+    <div className='not-found-page-model' data-testid={'not-found-page'}>
       <Helmet>
         <title>Not found page</title>
       </Helmet>
