@@ -4,7 +4,7 @@ type TOfferInside = {
 
 export default function OfferInside({ textOffer }: TOfferInside) {
   return (
-    <li className="offer__inside-item">
+    <li className="offer__inside-item" data-testid={'offer-inside'}>
       {textOffer}
     </li>
   );

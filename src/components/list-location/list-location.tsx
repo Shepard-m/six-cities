@@ -1,7 +1,7 @@
-import Location from './location';
+import Location from '../location/location';
 import { memo } from 'react';
 import { SyntheticEvent } from 'react';
-import { listLocation } from '../types/list-location';
+import { listLocation } from '../../types/list-location';
 
 type ListLocation = {
   listLocations: listLocation;
@@ -12,7 +12,7 @@ type ListLocation = {
 function ListLocation({ listLocations, handleCurrentCityClick, currentCity }: ListLocation) {
   const listValuesLocations = Object.values(listLocations);
   return (
-    <ul className="locations__list tabs__list">
+    <ul className="locations__list tabs__list" data-testid={'locations-list'}>
       {listValuesLocations.map((location) => <Location key={location} city={location} isActive={currentCity === location} handleCurrentCityClick={handleCurrentCityClick} />)}
     </ul>
   );

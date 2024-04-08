@@ -1,13 +1,13 @@
-import { changeFavoriteAction } from '../store/api-action';
-import { useAppDispatch, useAppSelector } from '../hooks';
-import { offerAction } from '../store/slice/offer/offer';
-import { favoriteSelectors } from '../store/slice/favorite/favorite';
-import { offersAction, offersSelectors } from '../store/slice/offers/offers';
-import { favoriteAction } from '../store/slice/favorite/favorite';
-import { userSelector } from '../store/slice/user/user';
-import { AppRoute, AuthorizationStatus, RequestStatus } from '../const';
+import { changeFavoriteAction } from '../../store/api-action';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { offerAction } from '../../store/slice/offer/offer';
+import { favoriteSelectors } from '../../store/slice/favorite/favorite';
+import { offersAction, offersSelectors } from '../../store/slice/offers/offers';
+import { favoriteAction } from '../../store/slice/favorite/favorite';
+import { userSelector } from '../../store/slice/user/user';
+import { AppRoute, AuthorizationStatus, RequestStatus } from '../../const';
 import { useNavigate } from 'react-router-dom';
-import { OfferPreviews } from '../types/offer-preview';
+import { OfferPreviews } from '../../types/offer-preview';
 
 type TButtonFavorite = {
   offerId: string;
@@ -21,7 +21,7 @@ type TButtonFavorite = {
 export default function ButtonFavorite({ offerId, sizeOptionButtonFavorite }: TButtonFavorite) {
   const statusFavorite = useAppSelector(favoriteSelectors.statusFavorite);
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
-  const offers = useAppSelector(offersSelectors.offers);
+  const offers = useAppSelector(offersSelectors.initialOffers);
   const favorite = offers.find((offer) => offer.id === offerId);
   let statusActive = favorite?.isFavorite;
   const { width, height, extraClass } = sizeOptionButtonFavorite;

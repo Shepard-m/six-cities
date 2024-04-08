@@ -55,6 +55,11 @@ const offersSlice = createSlice({
           offer.isFavorite = action.payload.isFavorite;
         }
       });
+      state.initialOffers.map((offer) => {
+        if (offer.id === action.payload.offerId) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
     },
   },
   selectors: {

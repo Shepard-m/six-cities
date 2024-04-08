@@ -6,7 +6,7 @@ type TFavoriteItemsProps = {
 }
 export default function FavoriteItems({ children, city }: TFavoriteItemsProps) {
   return (
-    <li className="favorites__locations-items">
+    <li className="favorites__locations-items" data-testid={'favorite-items'}>
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
           <a className="locations__item-link" href="#">

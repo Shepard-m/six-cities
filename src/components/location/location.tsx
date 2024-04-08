@@ -8,8 +8,8 @@ type LocationProps = {
 
 export default function Location({ city, isActive, handleCurrentCityClick }: LocationProps) {
   return (
-    <li className='locations__item'>
-      <a className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`} href="#">
+    <li className='locations__item' data-testid={'location'}>
+      <a className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`} href="#" data-testid={'location-link'}>
         <span onClick={handleCurrentCityClick}>{city}</span>
       </a>
     </li>

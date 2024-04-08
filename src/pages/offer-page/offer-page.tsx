@@ -27,6 +27,7 @@ export default function OfferPage() {
   const { offerId } = useParams();
 
   const offer = useAppSelector(offerSelector.currentOffer);
+  const city = useAppSelector(offersSelectors.city);
   const comments = useAppSelector(reviewsSelector.comments);
   const nearby = useAppSelector(offerSelector.nearby);
   const user = useAppSelector(userSelector.dataUser);
@@ -46,9 +47,7 @@ export default function OfferPage() {
     null
   );
   const handleListItemHover = (currentCard: OfferPreviews | null) => {
-    if (currentCard !== null) {
-      setSelectedOffer(currentCard);
-    }
+    setSelectedOffer(currentCard);
   };
 
   if (offer === null) {
@@ -138,7 +137,7 @@ export default function OfferPage() {
           </div>
         </div>
         <section className="offer__map map">
-          <Map city={offer.city} offers={nearby} selectedOffer={selectedOffer} />
+          <Map city={city} offers={nearby} selectedOffer={selectedOffer} />
         </section>
       </section>
       <div className="container">
