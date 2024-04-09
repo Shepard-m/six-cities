@@ -7,7 +7,7 @@ import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { getFavoritesByLocation } from '../../utils/utils';
 import { useAppSelector } from '../../hooks';
 import { useAppDispatch } from '../../hooks';
-import { ReactElement, useEffect } from 'react';
+import { useEffect } from 'react';
 import { fetchFavoriteAction, fetchOffersAction } from '../../store/api-action';
 import { favoriteSelectors } from '../../store/slice/favorite/favorite';
 
