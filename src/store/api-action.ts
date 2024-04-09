@@ -1,12 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AppDispatch, State } from '../types/state';
 import { AxiosInstance } from 'axios';
 import { Offer } from '../types/offer';
 import { OfferPreviews } from '../types/offer-preview';
-import { APIRoute, AppRoute } from '../const';
+import { APIRoute } from '../const';
 import { Comment } from '../types/comment';
 import { TApiComment } from '../types/api-comment';
-import { userAction } from './slice/user';
 import { UserData } from '../types/user-data';
 import { AuthData } from '../types/auth-data';
 import { saveToken } from '../service/token';
@@ -45,16 +43,15 @@ export const fetchOfferNearbyAction = createAsyncThunk<OfferPreviews[], string, 
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, { extra: AxiosInstance }>(
+export const loginAction = createAsyncThunk<void | string, AuthData, { extra: AxiosInstance }>(
   'data/login',
-  async ({ login: email, password }, { dispatch, extra: api }) => {
+  async ({ login: email, password }, { extra: api }) => {
     const { data: { token } } = await api.post<UserData>(APIRoute.LOGIN, { email, password });
     saveToken(token);
-    dispatch(userAction.redirectToRoute(AppRoute.Main));
   },
 );
 
-export const logoutAction = createAsyncThunk<void, undefined, { extra: AxiosInstance }>(
+export const logoutAction = createAsyncThunk<void | string, undefined, { extra: AxiosInstance }>(
   'data/logout',
   async (_arg, { extra: api }) => {
     await api.delete(APIRoute.LOGOUT);
