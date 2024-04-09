@@ -63,9 +63,9 @@ export default function OfferPage() {
       <Helmet>
         <title>Offer</title>
       </Helmet>
-      <section className="offer">
+      <section className="offer" >
         <div className="offer__gallery-container container">
-          <div className="offer__gallery">
+          <div className="offer__gallery" data-testid={'offer-page'}>
             {offer.images.map((image: string) => (
               <div key={image} className="offer__image-wrapper">
                 <img className="offer__image" src={`${image}`} alt="Photo studio" />

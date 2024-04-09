@@ -21,7 +21,7 @@ export default function App() {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<ProtectedRoute> <FavoritePage /></ProtectedRoute>}
+          element={<ProtectedRoute><FavoritePage /></ProtectedRoute>}
         />
         <Route
           path={AppRoute.Login}
