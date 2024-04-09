@@ -106,6 +106,7 @@ describe('Offers Slice', () => {
       initialOffers: listMocksOffersPreviews,
       offersStatus: RequestStatus.NONE,
     };
+
     const changeOffers = filterOffers.map((offer) => {
       const offerData = { ...offer };
       if (offerData.id === listMocksOffersPreviews[1].id) {
@@ -114,7 +115,7 @@ describe('Offers Slice', () => {
 
       return offerData;
     });
-    // странная ошибка
+
     const expectedState = {
       city: LocationCity.PARIS,
       offers: changeOffers,
