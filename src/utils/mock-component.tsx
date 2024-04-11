@@ -5,9 +5,13 @@ import { Provider } from 'react-redux';
 import { setupStore, store } from '../store';
 import { PropsWithChildren, ReactElement } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { render } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
-import { State } from '../types/state';
+import { RenderOptions, render } from '@testing-library/react';
+import { RootState, AppStore } from '../store';
+
+interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
+  preloadedState?: Partial<RootState>;
+  store?: AppStore;
+}
 
 export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   const memoryHistory = history ?? createMemoryHistory();
@@ -23,12 +27,12 @@ export function withHistory(component: JSX.Element, history?: MemoryHistory) {
   );
 }
 
-export function renderWithRouterAndRedux(component: ReactElement, { route = '/', preloaderState = {}, store: Store = setupStore(preloaderState) }: { route?: string; store?: typeof configureStore; preloaderState?: Partial<State> }) {
+export function renderWithRouterAndRedux(component: ReactElement, { route = '/', preloadedState = {}, store: Store = setupStore(preloadedState) }: ExtendedRenderOptions & { route?: string } = {}) {
   window.history.pushState({}, document.title, route);
   function Wrapper({ children }: PropsWithChildren) {
     return (
       <HelmetProvider>
-        <BrowserRouter history={createMemoryHistory({ initialEntries: [route] })}>
+        <BrowserRouter>
           <Provider store={Store}>
             {children}
           </Provider>

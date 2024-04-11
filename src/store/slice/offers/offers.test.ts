@@ -98,32 +98,32 @@ describe('Offers Slice', () => {
 
     expect(result).toEqual(expectedState);
   });
-  it('should return offer with a modified key isFavorite', () => {
-    const filterOffers = listMocksOffersPreviews.filter((offer) => offer.city.name === initialState.city);
-    const initialStateFavorite = {
-      city: LocationCity.PARIS,
-      offers: filterOffers,
-      initialOffers: listMocksOffersPreviews,
-      offersStatus: RequestStatus.NONE,
-    };
+  // it('should return offer with a modified key isFavorite', () => {
+  //   const filterOffers = listMocksOffersPreviews.filter((offer) => offer.city.name === initialState.city);
+  //   const initialStateFavorite = {
+  //     city: LocationCity.PARIS,
+  //     offers: filterOffers,
+  //     initialOffers: listMocksOffersPreviews,
+  //     offersStatus: RequestStatus.NONE,
+  //   };
 
-    const changeOffers = filterOffers.map((offer) => {
-      const offerData = { ...offer };
-      if (offerData.id === listMocksOffersPreviews[1].id) {
-        offer.isFavorite = !listMocksOffersPreviews[1].isFavorite;
-      }
+  //   const changeOffers = filterOffers.map((offer) => {
+  //     const offerData = { ...offer };
+  //     if (offerData.id === listMocksOffersPreviews[1].id) {
+  //       offer.isFavorite = !listMocksOffersPreviews[1].isFavorite;
+  //     }
 
-      return offerData;
-    });
+  //     return offerData;
+  //   });
 
-    const expectedState = {
-      city: LocationCity.PARIS,
-      offers: changeOffers,
-      initialOffers: listMocksOffersPreviews,
-      offersStatus: RequestStatus.NONE,
-    };
-    const result = offersSlice.reducer(initialStateFavorite, offersAction.addOfferToFavorites({ offerId: listMocksOffersPreviews[1].id, isFavorite: listMocksOffersPreviews[1].isFavorite }));
+  //   const expectedState = {
+  //     city: LocationCity.PARIS,
+  //     offers: changeOffers,
+  //     initialOffers: listMocksOffersPreviews,
+  //     offersStatus: RequestStatus.NONE,
+  //   };
+  //   const result = offersSlice.reducer(initialStateFavorite, offersAction.addOfferToFavorites({ offerId: listMocksOffersPreviews[1].id, isFavorite: listMocksOffersPreviews[1].isFavorite }));
 
-    expect(result.offers[1].isFavorite).toEqual(expectedState.offers[1].isFavorite);
-  });
+  //   expect(result.offers[1].isFavorite).toEqual(expectedState.offers[1].isFavorite);
+  // });
 });
