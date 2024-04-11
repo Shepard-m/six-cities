@@ -13,9 +13,9 @@ type TContainerProps = {
 
 export default function Container({ children, pageClass, isFooter, mainClass, navigation = true }: TContainerProps) {
   return (
-    <div className={clsx('page', pageClass)}>
+    <div className={clsx('page', pageClass)} data-testid={'pageClass'}>
       <Header navigation={navigation} />
-      <main className={clsx('page__main', mainClass)}>
+      <main className={clsx('page__main', mainClass)} data-testid='container'>
         {children}
       </main>
       {isFooter && <Footer />}
