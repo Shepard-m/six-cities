@@ -1,5 +1,5 @@
 {
-  "homepage": "https://shepard-m.github.io/1802891-six-cities-15",
+  "homepage": "https://github.com/Shepard-m/six-cities",
   "name": "six-cities",
   "version": "14.0.0",
   "type": "module",
@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest --passWithNoTests",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -b master -d build"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.2.1",
