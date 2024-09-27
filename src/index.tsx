@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HistoryRouter history={browserHistory}>
+      <HistoryRouter history={browserHistory} basename='/six-cities/'>
         <HelmetProvider>
           <ToastContainer />
           <App />
