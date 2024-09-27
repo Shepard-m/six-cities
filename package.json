@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest --passWithNoTests",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -b master --dist build"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@reduxjs/toolkit": "2.2.1",
