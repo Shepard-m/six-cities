@@ -128,8 +128,8 @@ const textError = {
 const mainEmptyClassContainer = 'cities__places-container--empty';
 
 
-const URL_MARKER_DEFAULT = '../markup/img/pin.svg';
+const URL_MARKER_DEFAULT = '/markup/img/pin.svg';
 
-const URL_MARKER_CURRENT = '../markup/img/pin-active.svg';
+const URL_MARKER_CURRENT = '/markup/img/pin-active.svg';
 
 export { OptionValidationFormReviews, textError, mainEmptyClassContainer, PagesClass, PagesMainClass, AppRoute, countStars, SizeOptionButtonFavorite, RequestStatus, AuthorizationStatus, OptionCard, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, OptionListCard, MapSize, ListSort, ListLocation as LocationCity, APIRoute };
