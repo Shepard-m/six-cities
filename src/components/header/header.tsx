@@ -28,6 +28,7 @@ function Header({ navigation }: THeaderProps) {
       toast.warn(textError.textLackOfAuthorization);
     }
   }, []);
+
   const authorizationStatus = useAppSelector(userSelector.authorizationStatus);
   const user = useAppSelector(userSelector.dataUser);
 
